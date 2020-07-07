@@ -14,6 +14,6 @@ class AppConfig(DjangoAppConfig):
         """Run this code when Django starts."""
         super().ready()
 
-        load_module_from_app(self.name, "fields")
-        load_module_from_app(self.name, "converters.models")
-        load_module_from_app(self.name, "converters.serializers")
+        load_module_from_app(self, "fields")
+        load_module_from_app(self, "converters.models")
+        load_module_from_app(self, "converters.serializers")

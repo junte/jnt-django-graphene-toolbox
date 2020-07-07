@@ -24,9 +24,7 @@ class OffsetPaginationMixin:
         super().__init__(*args, **kwargs)  # type:ignore
 
     @classmethod
-    def resolve_connection(
-        cls, connection, args, iterable,
-    ):
+    def resolve_connection(cls, connection, args, iterable, max_limit=None):
         """Resolve connection."""
         iterable = maybe_queryset(iterable)
         if isinstance(iterable, QuerySet):
