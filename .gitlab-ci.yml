@@ -8,6 +8,7 @@ variables:
 stages:
   - build
   - test
+  - publish
 
 build:
   stage: build
@@ -20,9 +21,9 @@ build:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
     - docker pull $DOCKER_CACHE_IMAGE || true
     - docker build
-             --cache-from $DOCKER_CACHE_IMAGE
-             -t $DOCKER_TEST_IMAGE
-             -t $DOCKER_CACHE_IMAGE .
+      --cache-from $DOCKER_CACHE_IMAGE
+      -t $DOCKER_TEST_IMAGE
+      -t $DOCKER_CACHE_IMAGE .
     - docker push $DOCKER_TEST_IMAGE
     - docker push $DOCKER_CACHE_IMAGE
 
@@ -47,3 +48,17 @@ test:
   artifacts:
     paths:
       - coverage
+
+publish_pypi:
+  stage: publish
+  only:
+    - master
+  image: $DOCKER_TEST_IMAGE
+  allow_failure: true
+  variables:
+    GIT_DEPTH: 5
+    GIT_STRATEGY: fetch
+  script:
+    - poetry config pypi-token.pypi $PYPI_API_TOKEN
+    - poetry build
+    - poetry publish
