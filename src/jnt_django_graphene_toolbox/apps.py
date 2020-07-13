@@ -17,3 +17,4 @@ class AppConfig(DjangoAppConfig):
         load_module_from_app(self, "fields")
         load_module_from_app(self, "converters.models")
         load_module_from_app(self, "converters.serializers")
+        load_module_from_app(self, "converters.forms")
