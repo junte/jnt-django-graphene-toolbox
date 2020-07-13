@@ -4,11 +4,14 @@ import graphene
 from graphene_django.registry import get_global_registry
 from graphene_django.rest_framework.serializer_converter import (
     convert_serializer_field_to_enum as base_convert_serializer_field_to_enum,
+)
+from graphene_django.rest_framework.serializer_converter import (
     get_graphene_type_from_serializer_field,
 )
 from graphene_file_upload.scalars import Upload
-from jnt_django_toolbox.models.fields import EnumField
 from rest_framework import serializers
+
+from jnt_django_graphene_toolbox.serializers.fields import EnumField
 
 
 @get_graphene_type_from_serializer_field.register(serializers.ManyRelatedField)
