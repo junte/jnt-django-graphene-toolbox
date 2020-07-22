@@ -10,7 +10,11 @@ run_checkers() {
 
   flake8 .
 
-  xenon --max-absolute A --max-modules A --max-average A .
+  xenon --max-absolute A \
+        --max-modules A \
+        --max-average A \
+        --exclude src/jnt_django_graphene_toolbox/helpers/values.py \
+        .
 
   # Checking `pyproject.toml` file contents:
   poetry check
