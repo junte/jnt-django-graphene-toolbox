@@ -50,8 +50,8 @@ def get_variable_values(schema, definition_asts, inputs):
                     ),
                     [def_ast],
                 )
-
-            values[var_name] = value
+            elif var_name in inputs:
+                values[var_name] = value
         else:
             errors = is_valid_value(value, var_type)
             if errors:
