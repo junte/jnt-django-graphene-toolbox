@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import graphene
-from graphene_django.registry import get_global_registry
 from graphene_django.rest_framework.serializer_converter import (
     convert_serializer_field_to_enum as base_convert_serializer_field_to_enum,
 )
@@ -11,6 +10,7 @@ from graphene_django.rest_framework.serializer_converter import (
 from graphene_file_upload.scalars import Upload
 from rest_framework import serializers
 
+from jnt_django_graphene_toolbox.converters.registry import get_registered_enum
 from jnt_django_graphene_toolbox.serializers.fields import EnumField
 
 
@@ -38,16 +38,7 @@ def convert_serializer_field_to_image(field):
 def convert_serializer_field_to_enum(field):
     """Convert serializers enum fields to rigth type."""
     if isinstance(field, EnumField):
-        global_registry = get_global_registry()
-
-        registered = next(
-            (
-                converted
-                for converted in global_registry._field_registry.values()  # noqa:  WPS437
-                if getattr(converted, "django_enum", None) == field.enum
-            ),
-            None,
-        )
+        registered = get_registered_enum(field.enum)
 
         if registered:
             return registered._meta.class_type  # noqa: WPS437

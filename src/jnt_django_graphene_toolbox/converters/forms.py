@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import graphene
-from graphene_django.forms.converter import convert_form_field
+from graphene_django.forms.converter import (
+    convert_form_field,
+    convert_form_field_to_string,
+)
+from jnt_django_toolbox.forms.fields import EnumChoiceField
 
+from jnt_django_graphene_toolbox.converters.registry import get_registered_enum
 from jnt_django_graphene_toolbox.filters.integers_array import (
     IntegersArrayField,
 )
@@ -12,3 +17,11 @@ from jnt_django_graphene_toolbox.filters.integers_array import (
 def convert_integers_array_field(field):
     """Convert form field."""
     return graphene.List(graphene.ID)
+
+
+@convert_form_field.register(EnumChoiceField)
+def convert_choice_field(field):
+    """Convert form field."""
+    registered = get_registered_enum(field.enum)
+
+    return registered or convert_form_field_to_string(field)
