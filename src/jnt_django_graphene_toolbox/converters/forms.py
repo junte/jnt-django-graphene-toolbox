@@ -24,4 +24,9 @@ def convert_choice_field(field):
     """Convert form field."""
     registered = get_registered_enum(field.enum)
 
-    return registered or convert_form_field_to_string(field)
+    if registered:
+        return registered._meta.class_type(  # noqa: WPS437
+            required=field.required,
+        )
+
+    return convert_form_field_to_string(field)
