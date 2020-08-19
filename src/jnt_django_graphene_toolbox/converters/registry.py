@@ -10,7 +10,7 @@ def get_registered_enum(enum):
     return next(
         (
             converted
-            for converted in global_registry._field_registry.values() # noqa:  WPS437
+            for converted in global_registry._field_registry.values()  # noqa:  WPS437
             if getattr(converted, "django_enum", None) == enum
         ),
         None,
