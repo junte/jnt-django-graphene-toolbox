@@ -23,7 +23,6 @@ def convert_integers_array_field(field):
 def convert_choice_field(field):
     """Convert form field."""
     registered = get_registered_enum(field.enum)
-
     if registered:
         return registered._meta.class_type(  # noqa: WPS437
             required=field.required,
