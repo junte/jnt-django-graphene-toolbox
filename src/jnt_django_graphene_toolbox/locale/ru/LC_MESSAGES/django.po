@@ -24,7 +24,7 @@ msgid "You do not have permission to perform this action"
 msgstr "У вас нет прав на это действия."
 
 msgid "Not found"
-msgstr "Не найдно."
+msgstr "Не найдeно."
 
 msgid "Input error"
 msgstr "Ошибка данных."
