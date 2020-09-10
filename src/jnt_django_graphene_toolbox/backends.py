@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
 
-from graphql import GraphQLCoreBackend
+from graphql import GraphQLCoreBackend, GraphQLError
 from graphql.execution.executors.sync import SyncExecutor
-
-from jnt_django_graphene_toolbox.errors.base import BaseGraphQLError
 
 
 class GraphQLSyncExecutor(SyncExecutor):
     """Executor with GraphQLError catching."""
 
     def execute(self, fn, *args, **kwargs):
-        """Execution handler."""
+        """
+        Execution handler.
+
+        Wraps gql errors for non logging as exceptions.
+        """
         try:
             return super().execute(fn, *args, **kwargs)
-        except BaseGraphQLError as err:
+        except GraphQLError as err:
             return err
 
 
