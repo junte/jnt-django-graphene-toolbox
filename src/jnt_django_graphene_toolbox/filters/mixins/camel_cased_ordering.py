@@ -18,7 +18,7 @@ class CamelCasedOrderingMixin(OrderingFilter):
     @classmethod
     def normalize_fields(cls, fields):
         """Normalize fields."""
-        ret = super().normalize_fields(fields)
+        normalized = super().normalize_fields(fields)
 
         return OrderedDict(
             [
@@ -29,6 +29,6 @@ class CamelCasedOrderingMixin(OrderingFilter):
                         for choice in choice_field.split("__")
                     ),
                 )
-                for key, choice_field in ret.items()
+                for key, choice_field in normalized.items()
             ],
         )
