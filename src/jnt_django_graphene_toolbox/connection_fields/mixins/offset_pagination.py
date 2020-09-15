@@ -36,7 +36,7 @@ class OffsetPaginationMixin:
             iterable,
             args,
             # differences from original function
-            slice_start=args.get("offset", 0),
+            slice_start=args.get("offset") or 0,
             list_length=items_count,
             list_slice_length=items_count,
             connection_type=connection,
