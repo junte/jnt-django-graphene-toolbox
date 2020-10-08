@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from rest_framework import serializers
 
 from jnt_django_graphene_toolbox.serializers.validators import (

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from graphene.types import argument
 from graphene_django.filter.utils import get_filtering_args_from_filterset
 

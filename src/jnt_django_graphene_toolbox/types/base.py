@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from graphene_django import DjangoObjectType
 from graphene_django.registry import get_global_registry
 from jnt_django_toolbox.models.fields import EnumField

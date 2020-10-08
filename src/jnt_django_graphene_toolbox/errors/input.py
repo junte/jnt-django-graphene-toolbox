@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from typing import Any, Dict, List, Optional, Sequence
 
 from django.utils.translation import gettext_lazy as _

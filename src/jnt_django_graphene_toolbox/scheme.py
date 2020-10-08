@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import graphene
 from graphene import List, NonNull
 from graphene.types import enum, typemap

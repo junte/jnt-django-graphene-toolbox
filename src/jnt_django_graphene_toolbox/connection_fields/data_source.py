@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from graphene_django.filter import DjangoFilterConnectionField
 from graphene_django.settings import graphene_settings
 

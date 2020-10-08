@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 

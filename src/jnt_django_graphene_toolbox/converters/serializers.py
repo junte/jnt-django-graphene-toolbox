@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import graphene
 from graphene_django.rest_framework.serializer_converter import (
     convert_serializer_field_to_enum as base_convert_serializer_field_to_enum,

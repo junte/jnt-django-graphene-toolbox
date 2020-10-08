@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django_filters import OrderingFilter as BaseOrderingFilter
 
 from jnt_django_graphene_toolbox.filters.mixins import (
