@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.utils.translation import gettext_lazy as _
 
 from jnt_django_graphene_toolbox.errors.base import BaseGraphQLError

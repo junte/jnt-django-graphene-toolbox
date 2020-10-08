@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import graphene
 from django.db import models
 from graphene_django.converter import convert_django_field

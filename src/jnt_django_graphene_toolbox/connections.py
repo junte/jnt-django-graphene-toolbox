@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from graphene import Connection, Int
 from graphql import ResolveInfo
 

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.utils import timezone
 from django_filters import OrderingFilter as BaseOrderingFilter
 

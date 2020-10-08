@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from .integer import IntegerFilter
 from .integers_array import IntegersArrayFilter
 from .ordering import BaseCollectionOrderingFilter, OrderingFilter

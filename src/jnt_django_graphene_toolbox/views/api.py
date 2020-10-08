@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from graphene_django.views import GraphQLView
 from rest_framework.decorators import (
     api_view,

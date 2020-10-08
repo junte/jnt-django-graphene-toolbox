@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.db import models
 from jnt_django_toolbox.models.fields import EnumField as ModelEnumField
 from rest_framework import serializers

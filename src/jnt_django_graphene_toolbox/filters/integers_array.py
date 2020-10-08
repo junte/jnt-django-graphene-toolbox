@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.contrib.postgres.forms import SimpleArrayField
 from django.forms import IntegerField
 from django_filters import Filter

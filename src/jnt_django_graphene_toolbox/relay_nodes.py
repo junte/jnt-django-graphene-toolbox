@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from graphene import relay
 from graphql import ResolveInfo
 

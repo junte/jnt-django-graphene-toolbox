@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jnt-django-graphene-toolbox"
-version = "0.1.19"
+version = "0.1.20"
 description = ""
 authors = ["Junte <tech@junte.ru>"]
 classifiers=[
@@ -42,7 +42,6 @@ pytest-xdist = "*"
 factory-boy = "*"
 flake8 = "*"
 flake8-pytest-style = "*"
-flake8-coding = "*"
 pytest-freezegun = "*"
 wemake-python-styleguide = "*"
 black = "^19.10b0"
