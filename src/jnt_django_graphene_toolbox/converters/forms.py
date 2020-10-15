@@ -9,12 +9,19 @@ from jnt_django_graphene_toolbox.converters.registry import get_registered_enum
 from jnt_django_graphene_toolbox.filters.integers_array import (
     IntegersArrayField,
 )
+from jnt_django_graphene_toolbox.filters.strings_array import StringsArrayField
 
 
 @convert_form_field.register(IntegersArrayField)
 def convert_integers_array_field(field):
     """Convert form field."""
     return graphene.List(graphene.ID)
+
+
+@convert_form_field.register(StringsArrayField)
+def convert_strings_array_field(field):
+    """Convert form field."""
+    return graphene.List(graphene.String)
 
 
 @convert_form_field.register(EnumChoiceField)
