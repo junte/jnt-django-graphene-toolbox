@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jnt-django-graphene-toolbox"
-version = "0.1.21"
+version = "0.1.22"
 description = ""
 authors = ["Junte <tech@junte.ru>"]
 classifiers=[
@@ -24,7 +24,7 @@ packages = [
 python = "^3.8"
 jnt_django_toolbox = "^0.1.6"
 graphene_django = "^2.10.1"
-djangorestframework = "^3.11.0"
+djangorestframework = "3.11.*"
 graphene-file-upload = "^1.2.2"
 django-filter = "^2.3.0"
 psycopg2-binary = "^2.8.5"

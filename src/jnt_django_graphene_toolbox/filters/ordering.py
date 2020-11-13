@@ -1,16 +1,11 @@
 from django_filters import OrderingFilter as BaseOrderingFilter
 
-from jnt_django_graphene_toolbox.filters.mixins import (
-    CamelCasedOrderingMixin,
-    NullsAlwaysLastOrderingMixin,
-)
+from jnt_django_graphene_toolbox.filters.mixins import CamelCasedOrderingMixin
 
 BASE_COLLECTION_ORDER_FIELD = "order"
 
 
-class OrderingFilter(
-    CamelCasedOrderingMixin, NullsAlwaysLastOrderingMixin, BaseOrderingFilter,
-):
+class OrderingFilter(CamelCasedOrderingMixin, BaseOrderingFilter):
     """Ordering filter."""
 
 
