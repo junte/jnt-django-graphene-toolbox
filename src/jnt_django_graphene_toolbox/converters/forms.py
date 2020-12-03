@@ -1,9 +1,13 @@
 import graphene
+from graphene import List
 from graphene_django.forms.converter import (
     convert_form_field,
     convert_form_field_to_string,
 )
-from jnt_django_toolbox.forms.fields import EnumChoiceField
+from jnt_django_toolbox.forms.fields import (
+    EnumChoiceField,
+    MultipleEnumChoiceField,
+)
 
 from jnt_django_graphene_toolbox.converters.registry import get_registered_enum
 from jnt_django_graphene_toolbox.filters.integers_array import (
@@ -34,3 +38,9 @@ def convert_choice_field(field):
         )
 
     return convert_form_field_to_string(field)
+
+
+@convert_form_field.register(MultipleEnumChoiceField)
+def convert_multiple_enum_choice_field(field):
+    """Convert form field."""
+    return List(graphene.Enum.from_enum(field.enum), required=field.required)
