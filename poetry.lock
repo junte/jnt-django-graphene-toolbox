@@ -654,14 +654,14 @@ description = ""
 name = "jnt-django-toolbox"
 optional = false
 python-versions = ">=3.8,<4.0"
-version = "0.1.20"
+version = "0.1.47"
 
 [package.dependencies]
-dateparser = ">=0.7.6,<0.8.0"
-django = ">=2"
+dateparser = "*"
+django = ">=3"
 
 [package.extras]
-jaeger = ["jaeger-client (>=4.3.0,<5.0.0)"]
+jaeger = ["jaeger-client"]
 
 [[package]]
 category = "dev"
@@ -1488,8 +1488,8 @@ isort = [
     {file = "isort-4.3.21.tar.gz", hash = "sha256:54da7e92468955c4fceacd0c86bd0ec997b0e1ee80d97f67c35a78b719dccab1"},
 ]
 jnt-django-toolbox = [
-    {file = "jnt-django-toolbox-0.1.20.tar.gz", hash = "sha256:450a4d2c54cdbf4fc6dc889c0382a3a07b78c07a46744ef9dcd25a8efd13630f"},
-    {file = "jnt_django_toolbox-0.1.20-py3-none-any.whl", hash = "sha256:d568d63ee48db53e4addcdc3403f582381306cd9435aa6e345167fc04979da5d"},
+    {file = "jnt-django-toolbox-0.1.47.tar.gz", hash = "sha256:af084d349431596c5da3034ad937b42665732bb21e705769aef98477b894823f"},
+    {file = "jnt_django_toolbox-0.1.47-py3-none-any.whl", hash = "sha256:d4dd3e719dc57fbe727a67923ed3d92cdff015499581e55a36676ff892906366"},
 ]
 mando = [
     {file = "mando-0.6.4-py2.py3-none-any.whl", hash = "sha256:4ce09faec7e5192ffc3c57830e26acba0fd6cd11e1ee81af0d4df0657463bd1c"},
