@@ -1,4 +1,6 @@
-from jnt_django_graphene_toolbox.filters.strings_array import StringsArrayFilter
+from jnt_django_graphene_toolbox.filters.strings_array import (
+    StringsArrayFilter,
+)
 
 from jnt_django_toolbox.forms.fields import MultipleEnumChoiceField
 
