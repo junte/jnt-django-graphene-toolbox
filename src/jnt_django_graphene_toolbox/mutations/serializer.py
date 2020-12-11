@@ -12,7 +12,6 @@ from graphql import ResolveInfo
 from jnt_django_graphene_toolbox.errors import (
     BaseGraphQLError,
     GraphQLInputError,
-    GraphQLPermissionDenied,
 )
 
 
@@ -81,9 +80,9 @@ class SerializerMutation(graphene.Mutation):
         """Mutate handler."""
         try:
             return cls._mutate(root, info, **input)
-        except BaseGraphQLError as exc:
-            exc.stack = sys.exc_info()[2]
-            return exc
+        except BaseGraphQLError as err:
+            err.stack = sys.exc_info()[2]
+            return err
 
     @classmethod
     def check_premissions(
@@ -93,8 +92,6 @@ class SerializerMutation(graphene.Mutation):
         **input,  # noqa: WPS125
     ) -> None:
         """Check permissions."""
-        if not cls.has_permission(root, info, **input):
-            raise GraphQLPermissionDenied()
 
     @classmethod
     def mutate_and_get_payload(
