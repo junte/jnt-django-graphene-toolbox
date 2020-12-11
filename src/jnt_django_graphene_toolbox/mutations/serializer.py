@@ -14,7 +14,6 @@ from jnt_django_graphene_toolbox.errors import (
     GraphQLInputError,
     GraphQLPermissionDenied,
 )
-from jnt_django_graphene_toolbox.security.mixins.mutation import AuthMutation
 
 
 class SerializerMutationOptions(MutationOptions):
@@ -23,7 +22,7 @@ class SerializerMutationOptions(MutationOptions):
     serializer_class = None
 
 
-class SerializerMutation(AuthMutation, graphene.Mutation):
+class SerializerMutation(graphene.Mutation):
     """Serializer mutation."""
 
     class Meta:
