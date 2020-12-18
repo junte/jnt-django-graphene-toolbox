@@ -83,7 +83,7 @@ class SerializerMutation(graphene.Mutation):
     ) -> "SerializerMutation":
         """Mutate handler."""
         try:
-            return cls._mutate(root, info, **input)
+            return cls.internal_mutate(root, info, **input)
         except BaseGraphQLError as err:
             err.stack = sys.exc_info()[2]
             return err
