@@ -4,6 +4,7 @@ from collections import OrderedDict
 from typing import Dict, Optional
 
 import graphene
+from django.core.exceptions import ImproperlyConfigured
 from graphene.types.mutation import MutationOptions
 from graphene.types.utils import yank_fields_from_attrs
 from graphene_django.rest_framework.mutation import fields_for_serializer
@@ -28,16 +29,17 @@ class SerializerMutation(graphene.Mutation):
         abstract = True
 
     @classmethod
-    def __init_subclass_with_meta__(
+    def __init_subclass_with_meta__(  # noqa: WPS211
         cls,
         serializer_class=None,
+        _meta=None,
         only_fields=(),
         exclude_fields=(),
         **options,
     ):
         """Inits subclass with meta."""
         if not serializer_class:
-            raise Exception(
+            raise ImproperlyConfigured(
                 "serializer_class is required for the SerializerMutation",
             )
 
@@ -60,13 +62,15 @@ class SerializerMutation(graphene.Mutation):
             OrderedDict(input_fields),
         )
 
-        meta_options = SerializerMutationOptions(cls)
-        meta_options.serializer_class = serializer_class
+        if not _meta:
+            _meta = SerializerMutationOptions(cls)  # noqa: WPS122
+
+        _meta.serializer_class = serializer_class
 
         super().__init_subclass_with_meta__(
             output=None,
             name="{0}Payload".format(base_name),
-            _meta=meta_options,
+            _meta=_meta,
             **options,
         )
 
@@ -83,15 +87,6 @@ class SerializerMutation(graphene.Mutation):
         except BaseGraphQLError as err:
             err.stack = sys.exc_info()[2]
             return err
-
-    @classmethod
-    def check_premissions(
-        cls,
-        root: Optional[object],
-        info: ResolveInfo,  # noqa: WPS110
-        **input,  # noqa: WPS125
-    ) -> None:
-        """Check permissions."""
 
     @classmethod
     def mutate_and_get_payload(
@@ -133,9 +128,8 @@ class SerializerMutation(graphene.Mutation):
         raise NotImplementedError
 
     @classmethod
-    def _mutate(
+    def internal_mutate(
         cls, root, info, **kwargs,  # noqa: WPS110
     ) -> "SerializerMutation":
         """Private mutate handler."""
-        cls.check_premissions(root, info, **kwargs)
         return cls.mutate_and_get_payload(root, info, **kwargs)
