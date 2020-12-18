@@ -8,7 +8,7 @@ AUTHENTICATION_FAILED = "AUTHENTICATION_FAILED"
 class GraphQLAuthenticationFailed(BaseGraphQLError):
     """Authentication failed error."""
 
-    _default_message = _("MSG_UNABLE_TO_LOGIN_WITH_PROVIDED_CREDENTIALS")
-    _default_extensions = {
+    default_message = _("MSG_UNABLE_TO_LOGIN_WITH_PROVIDED_CREDENTIALS")
+    default_extensions = {
         "code": AUTHENTICATION_FAILED,
     }

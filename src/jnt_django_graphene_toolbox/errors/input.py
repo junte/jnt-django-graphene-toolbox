@@ -11,8 +11,8 @@ INPUT_ERROR = "INPUT_ERROR"
 class GraphQLInputError(BaseGraphQLError):
     """Input error - should be used for mutation errors."""
 
-    _default_message: str = _("Input error")
-    _default_extensions: Optional[Dict[str, str]] = {
+    default_message: str = _("Input error")
+    default_extensions: Optional[Dict[str, str]] = {
         "code": INPUT_ERROR,
     }
 
