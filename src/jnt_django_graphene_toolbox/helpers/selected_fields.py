@@ -19,7 +19,8 @@ def collect_fields(node, fragments: Dict[str, object]):
             elif leaf["kind"] == "FragmentSpread":
                 field.update(
                     collect_fields(
-                        fragments[leaf["name"]["value"]], fragments,
+                        fragments[leaf["name"]["value"]],
+                        fragments,
                     ),
                 )
 

@@ -63,7 +63,8 @@ class OffsetPaginationMixin:
 
         args = args or {}
         before_offset = get_offset_with_default(
-            args.get("before"), list_length,
+            args.get("before"),
+            list_length,
         )
         after_offset = get_offset_with_default(args.get("after"), -1)
 
@@ -96,20 +97,29 @@ class OffsetPaginationMixin:
 
     @classmethod
     def _get_edges(
-        cls, edge_type, list_slice, start_offset, end_offset,
+        cls,
+        edge_type,
+        list_slice,
+        start_offset,
+        end_offset,
     ) -> List[ObjectType]:
         slice_fragment = list_slice[start_offset:end_offset]
 
         return [
             edge_type(
-                node=node, cursor=offset_to_cursor(start_offset + index),
+                node=node,
+                cursor=offset_to_cursor(start_offset + index),
             )
             for index, node in enumerate(slice_fragment)
         ]
 
     @classmethod
     def _has_previous_page(
-        cls, after_offset, after, last, start_offset,
+        cls,
+        after_offset,
+        after,
+        last,
+        start_offset,
     ) -> bool:
         lower_bound = after_offset + 1 if after else 0
 
@@ -117,7 +127,12 @@ class OffsetPaginationMixin:
 
     @classmethod
     def _has_next_page(  # noqa: WPS211
-        cls, before_offset, before, first, end_offset, list_length,
+        cls,
+        before_offset,
+        before,
+        first,
+        end_offset,
+        list_length,
     ) -> bool:
         upper_bound = before_offset if before else list_length
 
@@ -152,10 +167,17 @@ class OffsetPaginationMixin:
                 start_cursor=edges[0].cursor if edges else None,
                 end_cursor=edges[-1].cursor if edges else None,
                 has_previous_page=cls._has_previous_page(
-                    after_offset, after, last, start_offset,
+                    after_offset,
+                    after,
+                    last,
+                    start_offset,
                 ),
                 has_next_page=cls._has_next_page(
-                    before_offset, before, first, end_offset, list_length,
+                    before_offset,
+                    before,
+                    first,
+                    end_offset,
+                    list_length,
                 ),
             ),
         )

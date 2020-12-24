@@ -4,7 +4,8 @@ import graphene
 
 
 def text_choices_factory_type(
-    type_name: str, text_choices: Iterable[Tuple[str, str]],
+    type_name: str,
+    text_choices: Iterable[Tuple[str, str]],
 ) -> type:
     """Generate ObjectType class from TextChoices."""
     return type(

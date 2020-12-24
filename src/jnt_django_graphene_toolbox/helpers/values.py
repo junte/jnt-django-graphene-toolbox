@@ -35,7 +35,8 @@ def get_variable_values(schema, definition_asts, inputs):
             raise GraphQLError(
                 'Variable "${var_name}" expected value of type "{var_type}"'
                 " which cannot be used as an input type.".format(
-                    var_name=var_name, var_type=print_ast(def_ast.type),
+                    var_name=var_name,
+                    var_type=print_ast(def_ast.type),
                 ),
                 [def_ast],
             )
@@ -44,7 +45,8 @@ def get_variable_values(schema, definition_asts, inputs):
                 raise GraphQLError(
                     'Variable "${var_name}" of required type "{var_type}" '
                     "was not provided.".format(
-                        var_name=var_name, var_type=var_type,
+                        var_name=var_name,
+                        var_type=var_type,
                     ),
                     [def_ast],
                 )
@@ -56,7 +58,9 @@ def get_variable_values(schema, definition_asts, inputs):
                 message = "\n{0}".format("\n".join(errors))
                 raise GraphQLError(
                     'Variable "${0}" got invalid value {1}.{2}'.format(
-                        var_name, json.dumps(value, sort_keys=True), message,
+                        var_name,
+                        json.dumps(value, sort_keys=True),
+                        message,
                     ),
                     [def_ast],
                 )

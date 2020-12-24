@@ -1,19 +1,15 @@
 import re
-import sys
 from collections import OrderedDict
 from typing import Dict, Optional
 
-import graphene
 from django.core.exceptions import ImproperlyConfigured
-from graphene.types.mutation import MutationOptions
 from graphene.types.utils import yank_fields_from_attrs
 from graphene_django.rest_framework.mutation import fields_for_serializer
 from graphql import ResolveInfo
 
-from jnt_django_graphene_toolbox.errors import (
-    BaseGraphQLError,
-    GraphQLInputError,
-)
+from jnt_django_graphene_toolbox.errors import GraphQLInputError
+from jnt_django_graphene_toolbox.mutations import BaseMutation
+from jnt_django_graphene_toolbox.mutations.base import MutationOptions
 
 
 class SerializerMutationOptions(MutationOptions):
@@ -22,7 +18,7 @@ class SerializerMutationOptions(MutationOptions):
     serializer_class = None
 
 
-class SerializerMutation(graphene.Mutation):
+class SerializerMutation(BaseMutation):
     """Serializer mutation."""
 
     class Meta:
@@ -46,7 +42,10 @@ class SerializerMutation(graphene.Mutation):
         serializer = serializer_class()
 
         input_fields = fields_for_serializer(
-            serializer, only_fields, exclude_fields, is_input=True,
+            serializer,
+            only_fields,
+            exclude_fields,
+            is_input=True,
         )
 
         input_fields = yank_fields_from_attrs(input_fields)
@@ -75,34 +74,29 @@ class SerializerMutation(graphene.Mutation):
         )
 
     @classmethod
-    def mutate(
-        cls,
-        root: Optional[object],
-        info: ResolveInfo,  # noqa: WPS110
-        **input,  # noqa: WPS125
-    ) -> "SerializerMutation":
-        """Mutate handler."""
+    def mutate(cls, root, info, **kwargs):  # noqa: WPS110
+        """Mutate."""
+        cls.check_premissions(root, info, **kwargs)
+
+        serializer = cls._meta.serializer_class(
+            cls.get_serializer_kwargs(root, info, **kwargs),
+        )
+
+        if not serializer.is_valid():
+            raise GraphQLInputError(serializer.errors)
+
         try:
-            return cls.internal_mutate(root, info, **input)
-        except BaseGraphQLError as err:
-            err.stack = sys.exc_info()[2]
-            return err
+            return cls.mutate_and_get_payload(
+                root,
+                info,
+                validated_data=serializer.validated_data,
+            )
+        except Exception as err:
+            payload = cls.handle_error(root, info, err)
+            if payload:
+                return payload
 
-    @classmethod
-    def mutate_and_get_payload(
-        cls,
-        root: Optional[object],
-        info: ResolveInfo,  # noqa: WPS110, WPS125
-        **input,  # noqa: WPS125
-    ) -> "SerializerMutation":
-        """Mutate and get payload."""
-        kwargs = cls.get_serializer_kwargs(root, info, **input)
-        serializer = cls._meta.serializer_class(**kwargs)
-
-        if serializer.is_valid():
-            return cls.perform_mutate(root, info, serializer.validated_data)
-
-        raise GraphQLInputError(serializer.errors)
+            raise
 
     @classmethod
     def get_serializer_kwargs(
@@ -126,10 +120,3 @@ class SerializerMutation(graphene.Mutation):
     ) -> "SerializerMutation":
         """Overrideable mutation operation."""
         raise NotImplementedError
-
-    @classmethod
-    def internal_mutate(
-        cls, root, info, **kwargs,  # noqa: WPS110
-    ) -> "SerializerMutation":
-        """Private mutate handler."""
-        return cls.mutate_and_get_payload(root, info, **kwargs)

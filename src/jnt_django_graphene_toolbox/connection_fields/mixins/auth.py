@@ -37,7 +37,8 @@ class AuthMixin(_Base):
             raise GraphQLPermissionDenied()
 
         return super(  # noqa: WPS608
-            DjangoFilterConnectionField, cls,
+            DjangoFilterConnectionField,
+            cls,
         ).connection_resolver(
             resolver,
             connection,

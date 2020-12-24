@@ -22,12 +22,11 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-jnt_django_toolbox = "^0.1.6"
-graphene_django = "^2.10.1"
-djangorestframework = "3.11.*"
-graphene-file-upload = "^1.2.2"
-django-filter = "^2.3.0"
-psycopg2-binary = "^2.8.5"
+jnt_django_toolbox = "*"
+graphene_django = "*"
+djangorestframework = "*"
+graphene-file-upload = "*"
+django-filter = "*"
 
 [tool.poetry.dev-dependencies]
 mypy = "*"
@@ -38,15 +37,15 @@ safety = "*"
 pytest = "*"
 pytest-cov = "*"
 pytest-django = "*"
+pytest-freezegun = "*"
 pytest-xdist = "*"
 factory-boy = "*"
 flake8 = "*"
 flake8-pytest-style = "*"
-pytest-freezegun = "*"
-wemake-python-styleguide = "*"
-black = "^19.10b0"
 flake8-class-attributes-order = "*"
-isort = ">=4.3.5 <5"
+wemake-python-styleguide = "*"
+black = "^20.8b1"
+psycopg2-binary = "*"
 
 [tool.black]
 line-length = 79

@@ -19,9 +19,13 @@ class TypeMap(typemap.TypeMap):
         return super().graphene_reducer(map, type)
 
     def _is_enum(self, gr_map, gr_type) -> bool:
-        return isinstance(
-            gr_map[gr_type._meta.name], GrapheneGraphQLType,  # noqa: WPS437
-        ) and isinstance(gr_type, enum.EnumMeta)
+        return (
+            isinstance(
+                gr_map[gr_type._meta.name],  # noqa: WPS437
+                GrapheneGraphQLType,
+            )
+            and isinstance(gr_type, enum.EnumMeta)
+        )
 
 
 class Schema(graphene.Schema):
@@ -38,5 +42,7 @@ class Schema(graphene.Schema):
         if self.types:
             initial_types += self.types
         self._type_map = TypeMap(
-            initial_types, auto_camelcase=self.auto_camelcase, schema=self,
+            initial_types,
+            auto_camelcase=self.auto_camelcase,
+            schema=self,
         )

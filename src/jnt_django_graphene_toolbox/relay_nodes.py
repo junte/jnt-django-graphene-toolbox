@@ -15,7 +15,10 @@ class DatasourceRelayNode(relay.Node):
 
     @classmethod
     def get_node_from_global_id(
-        cls, info, global_id, only_type=None,  # noqa: WPS110
+        cls,
+        info,  # noqa: WPS110
+        global_id,
+        only_type=None,  # noqa: WPS110
     ):
         """Get node by global id."""
         if cls._is_invalid_node(global_id, only_type):
@@ -40,7 +43,9 @@ class DatasourceRelayNode(relay.Node):
 
     @classmethod
     def has_permission(
-        cls, info: ResolveInfo, obj_id: str,  # noqa: WPS110
+        cls,
+        info: ResolveInfo,  # noqa: WPS110
+        obj_id: str,  # noqa: WPS110
     ) -> bool:
         """Check if user has permissions."""
         return all(

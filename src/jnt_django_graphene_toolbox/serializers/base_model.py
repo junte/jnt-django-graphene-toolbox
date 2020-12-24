@@ -20,7 +20,8 @@ class ModelSerializer(serializers.ModelSerializer):
     def build_standard_field(self, field_name, model_field):
         """Customize building standard field."""
         field_class, field_kwargs = super().build_standard_field(
-            field_name, model_field,
+            field_name,
+            model_field,
         )
         if isinstance(model_field, ModelEnumField):
             field_kwargs.pop("choices", None)

@@ -62,7 +62,12 @@ class ValidateFilterSetMixin(_Base):
             raise GraphQLInputError(filterset.errors)
 
         return super().resolve_queryset(
-            connection, iterable, info, args, filtering_args, filterset_class,
+            connection,
+            iterable,
+            info,
+            args,
+            filtering_args,
+            filterset_class,
         )
 
     def _generate_filter_set_class(self) -> FilterSet:

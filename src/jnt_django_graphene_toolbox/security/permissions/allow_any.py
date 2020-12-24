@@ -11,7 +11,9 @@ class AllowAny:
     """
 
     def has_node_permission(
-        self, info: ResolveInfo, obj_id: str,  # noqa: WPS110
+        self,
+        info: ResolveInfo,  # noqa: WPS110
+        obj_id: str,  # noqa: WPS110
     ) -> bool:
         """Check has node permission."""
         return True
@@ -26,7 +28,8 @@ class AllowAny:
         return True
 
     def has_filter_permission(
-        self, info: ResolveInfo,  # noqa: WPS110
+        self,
+        info: ResolveInfo,  # noqa: WPS110
     ) -> bool:
         """Check has filter permission."""
         return True

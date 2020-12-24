@@ -10,7 +10,9 @@ from jnt_django_graphene_toolbox.types import BitField, ImageType
 def convert_bit_field(field, registry=None):
     """Field to float."""
     return graphene.Field(
-        BitField, description=field.help_text, required=not field.null,
+        BitField,
+        description=field.help_text,
+        required=not field.null,
     )
 
 

@@ -6,6 +6,7 @@ from jnt_django_graphene_toolbox.connection_fields.mixins import (
 
 
 class OffsetPaginationConnectionField(
-    OffsetPaginationMixin, graphene.ConnectionField,
+    OffsetPaginationMixin,
+    graphene.ConnectionField,
 ):
     """Supports pagination via offset, first, last, before, after arguments."""

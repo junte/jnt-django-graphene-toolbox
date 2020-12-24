@@ -27,7 +27,9 @@ class GraphQLInputError(BaseGraphQLError):
         super().__init__(*args, **kwargs)
 
     def _convert_errors(  # type: ignore
-        self, errors, index=None,
+        self,
+        errors,
+        index=None,
     ) -> Sequence[Any]:
         field_errors = []
 
@@ -44,7 +46,8 @@ class GraphQLInputError(BaseGraphQLError):
         return field_errors
 
     def _get_converted_err_messages(  # type: ignore
-        self, messages,
+        self,
+        messages,
     ) -> Sequence[Any]:
         converted_msgs: List[Any] = []  # type: ignore
 
