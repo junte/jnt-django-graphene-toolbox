@@ -7,7 +7,10 @@ from graphene.types.utils import yank_fields_from_attrs
 from graphene_django.rest_framework.mutation import fields_for_serializer
 from graphql import ResolveInfo
 
-from jnt_django_graphene_toolbox.errors import GraphQLInputError
+from jnt_django_graphene_toolbox.errors import (
+    GraphQLInputError,
+    GraphQLPermissionDenied,
+)
 from jnt_django_graphene_toolbox.mutations import BaseMutation
 from jnt_django_graphene_toolbox.mutations.base import MutationOptions
 
@@ -18,7 +21,7 @@ class SerializerMutationOptions(MutationOptions):
     serializer_class = None
 
 
-class SerializerMutation(BaseMutation):
+class BaseSerializerMutation(BaseMutation):
     """Serializer mutation."""
 
     class Meta:
@@ -36,7 +39,7 @@ class SerializerMutation(BaseMutation):
         """Inits subclass with meta."""
         if not serializer_class:
             raise ImproperlyConfigured(
-                "serializer_class is required for the SerializerMutation",
+                "serializer_class is required for the BaseSerializerMutation",
             )
 
         serializer = serializer_class()
@@ -76,14 +79,15 @@ class SerializerMutation(BaseMutation):
     @classmethod
     def mutate(cls, root, info, **kwargs):  # noqa: WPS110
         """Mutate."""
-        cls.check_premissions(root, info, **kwargs)
+        if not cls.check_premissions(root, info, **kwargs):
+            return GraphQLPermissionDenied()
 
         serializer = cls._meta.serializer_class(
-            cls.get_serializer_kwargs(root, info, **kwargs),
+            **cls.get_serializer_kwargs(root, info, **kwargs),
         )
 
         if not serializer.is_valid():
-            raise GraphQLInputError(serializer.errors)
+            return GraphQLInputError(serializer.errors)
 
         try:
             return cls.mutate_and_get_payload(
@@ -117,6 +121,6 @@ class SerializerMutation(BaseMutation):
         root: Optional[object],
         info: ResolveInfo,  # noqa: WPS110
         validated_data,
-    ) -> "SerializerMutation":
+    ) -> "BaseSerializerMutation":
         """Overrideable mutation operation."""
         raise NotImplementedError

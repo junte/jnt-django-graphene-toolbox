@@ -40,7 +40,8 @@ class BaseMutation(graphene.Mutation):
     @classmethod
     def mutate(cls, root, info, **kwargs):  # noqa: WPS110
         """Mutate."""
-        cls.check_premissions(root, info, **kwargs)
+        if not cls.check_premissions(root, info, **kwargs):
+            return GraphQLPermissionDenied()
 
         try:
             return cls.mutate_and_get_payload(root, info)
@@ -57,15 +58,12 @@ class BaseMutation(graphene.Mutation):
         root: Optional[object],
         info: ResolveInfo,  # noqa: WPS110
         **kwargs,  # noqa: WPS125
-    ) -> None:
+    ) -> bool:
         """Check permissions."""
-        has_permission = all(
+        return all(
             perm().has_mutation_permission(root, info, **kwargs)
             for perm in cls._meta.permission_classes
         )
-
-        if not has_permission:
-            raise GraphQLPermissionDenied
 
     @classmethod
     def handle_error(
