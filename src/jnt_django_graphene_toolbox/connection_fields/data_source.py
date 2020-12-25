@@ -1,10 +1,7 @@
 from graphene_django.filter import DjangoFilterConnectionField
 from graphene_django.settings import graphene_settings
 
-from jnt_django_graphene_toolbox.connection_fields.mixins import (
-    AuthMixin,
-    OffsetPaginationMixin,
-)
+from jnt_django_graphene_toolbox.connection_fields.mixins import AuthMixin
 from jnt_django_graphene_toolbox.filters.mixins import ValidateFilterSetMixin
 from jnt_django_graphene_toolbox.security.permissions import AllowAuthenticated
 
@@ -13,7 +10,6 @@ MAX_SIZE = graphene_settings.RELAY_CONNECTION_MAX_LIMIT
 
 class DataSourceConnectionField(  # noqa: WPS215
     AuthMixin,
-    OffsetPaginationMixin,
     ValidateFilterSetMixin,
     DjangoFilterConnectionField,
 ):
