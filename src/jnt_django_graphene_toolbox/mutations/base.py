@@ -44,7 +44,7 @@ class BaseMutation(graphene.Mutation):
             return GraphQLPermissionDenied()
 
         try:
-            return cls.mutate_and_get_payload(root, info)
+            return cls.mutate_and_get_payload(root, info, **kwargs)
         except Exception as err:
             payload = cls.handle_error(root, info, err)
             if payload:
