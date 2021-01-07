@@ -2,7 +2,7 @@ from graphene import Connection, Int
 from graphql import ResolveInfo
 
 
-class DataSourceConnection(Connection):
+class ModelConnection(Connection):
     """Datasource connection."""
 
     class Meta:
