@@ -9,7 +9,12 @@ class TypeMap(typemap.TypeMap):
     """Type map."""
 
     def graphene_reducer(self, map, type):  # noqa: WPS125
-        """Graphene reducer."""
+        """
+        Graphene reducer.
+
+        It is a hack for fix "Found different types with the same name... " in
+        enums.
+        """
         if isinstance(type, (List, NonNull)):
             return super().graphene_reducer(map, type)
 
