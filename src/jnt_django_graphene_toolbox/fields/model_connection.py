@@ -100,8 +100,6 @@ class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
             queryset,
             info,
         )
-        if not cls.filterset_class:
-            return queryset
 
         return cls._filter_queryset(queryset, info, args)
 
@@ -283,6 +281,9 @@ class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
         info,  # noqa: WPS110
         args,
     ) -> models.QuerySet:
+        if not cls.filterset_class:
+            return queryset
+
         filterset = cls.filterset_class(
             data=cls._filter_kwargs(args),
             queryset=queryset,
