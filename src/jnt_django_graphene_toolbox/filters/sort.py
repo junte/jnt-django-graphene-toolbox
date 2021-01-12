@@ -38,7 +38,7 @@ class SortHandler(OrderingFilter):
 
     def __init__(
         self,
-        enum: Type[graphene.Enum] = None,
+        enum: Type[graphene.Enum],
         *args,
         **kwargs,
     ) -> None:
