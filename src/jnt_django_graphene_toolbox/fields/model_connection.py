@@ -1,5 +1,5 @@
 from functools import partial
-from typing import Optional, Type
+from typing import Dict, Optional, Type
 
 import django_filters
 import graphene
@@ -278,7 +278,7 @@ class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
         cls,
         queryset: models.QuerySet,
         info,  # noqa: WPS110
-        args,
+        args: Dict[str, object],
     ) -> models.QuerySet:
         if not cls.filterset_class:
             return queryset
@@ -301,7 +301,7 @@ class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
         cls,
         queryset: models.QuerySet,
         info,  # noqa: WPS110
-        args,
+        args: Dict[str, object],
     ) -> models.QuerySet:
         if not cls.sort_handler:
             return queryset
@@ -309,8 +309,12 @@ class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
         return cls.sort_handler.filter(queryset, args.get("sort"))
 
     @classmethod
-    def _get_filterset_args(cls, args):
+    def _get_filterset_args(cls, args: Dict[str, object]) -> Dict[str, object]:
+        if not cls.filterset_class:
+            return {}
+
         filters_keys = cls.filterset_class.declared_filters.keys()
+
         return {
             item_key: item_value
             for item_key, item_value in args.items()
