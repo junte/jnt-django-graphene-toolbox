@@ -277,7 +277,12 @@ class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
         return kwargs
 
     @classmethod
-    def _filter_queryset(cls, queryset, info, args):  # noqa: WPS110
+    def _filter_queryset(
+        cls,
+        queryset: models.QuerySet,
+        info,  # noqa: WPS110
+        args,
+    ) -> models.QuerySet:
         filterset = cls.filterset_class(
             data=cls._filter_kwargs(args),
             queryset=queryset,
