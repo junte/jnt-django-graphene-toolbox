@@ -284,11 +284,7 @@ class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
             return queryset
 
         filterset = cls.filterset_class(
-            data={
-                item_key: item_value
-                for item_key, item_value in args.items()
-                if item_key != "sort"
-            },
+            data=cls._get_filterset_args(args),
             queryset=queryset,
             request=info.context,
         )
@@ -311,3 +307,12 @@ class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
             return queryset
 
         return cls.sort_handler.filter(queryset, args.get("sort"))
+
+    @classmethod
+    def _get_filterset_args(cls, args):
+        filters_keys = cls.filterset_class.declared_filters.keys()
+        return {
+            item_key: item_value
+            for item_key, item_value in args.items()
+            if item_key in filters_keys
+        }
