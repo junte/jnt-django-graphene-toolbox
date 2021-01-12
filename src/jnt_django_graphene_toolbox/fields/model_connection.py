@@ -1,12 +1,12 @@
 from functools import partial
-from typing import Dict, Optional, Type
+from typing import Optional, Type
 
 import django_filters
+import graphene
 from django.db import models
 from graphene import Int, NonNull
 from graphene.relay import ConnectionField, PageInfo
 from graphene.relay import connection as relay_connection
-from graphene.utils import str_converters
 from graphene_django import settings, utils
 from graphql_relay.connection.arrayconnection import (
     connection_from_list_slice,
@@ -17,12 +17,14 @@ from graphql_relay.connection.arrayconnection import (
 from promise import Promise
 
 from jnt_django_graphene_toolbox.errors import GraphQLPermissionDenied
+from jnt_django_graphene_toolbox.filters import SortHandler
 from jnt_django_graphene_toolbox.types import BaseModelObjectType
 
 
 class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
     """Base class for model collections."""
 
+    sort_handler: Optional[SortHandler] = None
     filterset_class: Optional[Type[django_filters.FilterSet]] = None
     auth_required: bool = False
 
@@ -38,6 +40,11 @@ class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
             settings.graphene_settings.RELAY_CONNECTION_ENFORCE_FIRST_OR_LAST,
         )
         kwargs.setdefault("offset", Int())
+
+        if self.sort_handler:
+            kwargs["sort"] = graphene.Argument(
+                graphene.List(self.sort_handler.enum),
+            )
 
         super().__init__(*args, **kwargs)
 
@@ -100,6 +107,8 @@ class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
             queryset,
             info,
         )
+
+        queryset = cls._sort_queryset(queryset, info, args)
 
         return cls._filter_queryset(queryset, info, args)
 
@@ -265,16 +274,6 @@ class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
         return self.model._default_manager  # noqa: WPS437
 
     @classmethod
-    def _filter_kwargs(cls, args) -> Dict[str, object]:
-        kwargs = {}
-        for arg_key, arg_value in args.items():
-            if arg_key in args:
-                if arg_key == "order_by" and isinstance(arg_value, str):
-                    arg_value = str_converters.to_snake_case(arg_value)
-                kwargs[arg_key] = arg_value
-        return kwargs
-
-    @classmethod
     def _filter_queryset(
         cls,
         queryset: models.QuerySet,
@@ -285,7 +284,11 @@ class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
             return queryset
 
         filterset = cls.filterset_class(
-            data=cls._filter_kwargs(args),
+            data={
+                item_key: item_value
+                for item_key, item_value in args.items()
+                if item_key != "sort"
+            },
             queryset=queryset,
             request=info.context,
         )
@@ -296,3 +299,15 @@ class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
             )
 
         return queryset
+
+    @classmethod
+    def _sort_queryset(
+        cls,
+        queryset: models.QuerySet,
+        info,  # noqa: WPS110
+        args,
+    ) -> models.QuerySet:
+        if not cls.sort_handler:
+            return queryset
+
+        return cls.sort_handler.filter(queryset, args.get("sort"))
