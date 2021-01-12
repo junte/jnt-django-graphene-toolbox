@@ -15,7 +15,6 @@ from graphql_relay.connection.arrayconnection import (
     offset_to_cursor,
 )
 from promise import Promise
-from rest_framework.exceptions import ValidationError
 
 from jnt_django_graphene_toolbox.errors import GraphQLPermissionDenied
 from jnt_django_graphene_toolbox.types import BaseModelObjectType
@@ -104,14 +103,7 @@ class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
         if not cls.filterset_class:
             return queryset
 
-        filterset = cls.filterset_class(
-            data=cls._filter_kwargs(args),
-            queryset=queryset,
-            request=info.context,
-        )
-        if filterset.form.is_valid():
-            return filterset.qs
-        raise ValidationError(filterset.form.errors.as_json())
+        return cls._filter_queryset(queryset, info, args)
 
     @classmethod
     def resolve_connection(  # noqa: WPS210
@@ -283,3 +275,18 @@ class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
                     arg_value = str_converters.to_snake_case(arg_value)
                 kwargs[arg_key] = arg_value
         return kwargs
+
+    @classmethod
+    def _filter_queryset(cls, queryset, info, args):  # noqa: WPS110
+        filterset = cls.filterset_class(
+            data=cls._filter_kwargs(args),
+            queryset=queryset,
+            request=info.context,
+        )
+        for item_name, item_value in filterset.data.items():
+            queryset = filterset.filters[item_name].filter(
+                queryset,
+                item_value,
+            )
+
+        return queryset
