@@ -16,7 +16,10 @@ from graphql_relay.connection.arrayconnection import (
 )
 from promise import Promise
 
-from jnt_django_graphene_toolbox.errors import GraphQLPermissionDenied
+from jnt_django_graphene_toolbox.errors import (
+    GraphQLInputError,
+    GraphQLPermissionDenied,
+)
 from jnt_django_graphene_toolbox.filters import SortHandler
 from jnt_django_graphene_toolbox.types import BaseModelObjectType
 
@@ -288,13 +291,10 @@ class BaseModelConnectionField(ConnectionField):  # noqa: WPS214
             queryset=queryset,
             request=info.context,
         )
-        for item_name, item_value in filterset.data.items():
-            queryset = filterset.filters[item_name].filter(
-                queryset,
-                item_value,
-            )
+        if not filterset.is_valid():
+            raise GraphQLInputError(filterset.errors)
 
-        return queryset
+        return filterset.qs
 
     @classmethod
     def _sort_queryset(
