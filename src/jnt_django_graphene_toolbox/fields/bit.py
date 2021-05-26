@@ -1,19 +1,27 @@
 import graphene
-from graphene.utils.str_converters import to_snake_case
+from graphene.utils import str_converters
 
 
 class BitField(graphene.List):
     """Bit field."""
 
     def __init__(self, enum, *args, **kwargs):
+        """
+        Initialize.
+
+        Add resolver-wrapper
+        """
         self._resolver = kwargs.get("resolver")
         kwargs["resolver"] = self._resolver_wrap
         super().__init__(graphene.Enum.from_enum(enum), *args, **kwargs)
 
-    def _resolver_wrap(self, instance, info):
+    def _resolver_wrap(self, instance, info):  # noqa: WPS110
         if self._resolver:
-            values = self._resolver(instance, info)
+            field_value = self._resolver(instance, info)
         else:
-            values = getattr(instance, to_snake_case(info.field_name))
+            field_value = getattr(
+                instance,
+                str_converters.to_snake_case(info.field_name),
+            )
 
-        return [key for key, setted in values if setted]
+        return [key for key, setted in field_value if setted]
