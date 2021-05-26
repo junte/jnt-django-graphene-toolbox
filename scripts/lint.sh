@@ -24,7 +24,7 @@ run_checkers() {
 
   # Checking if all the dependencies are secure and do not have any
   # known vulnerabilities:
-  safety check --bare --full-report
+#  safety check --bare --full-report
 }
 
 run_checkers

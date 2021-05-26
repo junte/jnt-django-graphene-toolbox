@@ -32,7 +32,7 @@ quality:
   stage: test
   script:
     - cd /app
-    - make check_quality
+    - make lint
 
 test:
   image: $DOCKER_TEST_IMAGE
