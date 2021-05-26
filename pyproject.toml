@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jnt-django-graphene-toolbox"
-version = "0.2.5"
+version = "0.2.6"
 description = ""
 authors = ["Junte <tech@junte.ru>"]
 classifiers=[
