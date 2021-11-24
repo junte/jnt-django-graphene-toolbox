@@ -6,3 +6,4 @@ class AppConfig(DjangoAppConfig):
 
     name = "jnt_django_graphene_toolbox"
     verbose_name = "Django graphene toolbox"
+    default = True
