@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jnt-django-graphene-toolbox"
-version = "0.2.6"
+version = "0.3.0"
 description = ""
 authors = ["Junte <tech@junte.ru>"]
 classifiers=[
@@ -8,8 +8,7 @@ classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
-        'Framework :: Django :: 3.0',
-        'Framework :: Django :: 3.1',
+        'Framework :: Django :: 3.2',
         'Topic :: Software Development :: Libraries :: Python Modules'
 ]
 
@@ -18,7 +17,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 jnt_django_toolbox = "*"
 graphene_django = "*"
 djangorestframework = "*"
@@ -40,12 +39,12 @@ flake8 = "*"
 flake8-pytest-style = "*"
 flake8-class-attributes-order = "*"
 wemake-python-styleguide = "*"
-black = "^20.8b1"
+black = "*"
 psycopg2-binary = "*"
 
 [tool.black]
 line-length = 79
-target-version = ['py38']
+target-version = ['py39']
 include = '\.pyi?$'
 exclude = '''
 (

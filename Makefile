@@ -1,6 +1,9 @@
 lint:
 	@./scripts/lint.sh
 
+test:
+	@pytest
+
 release:
 	@./scripts/release.sh
 

@@ -21,7 +21,7 @@ class RequestFactory(DjangoRequestFactory):
 
         self._user: Optional["User"] = None
 
-    def set_user(self, user) -> None:
+    def set_user(self, user) -> None:  # noqa: WPS615
         """Set user for auth requests."""
         self._user = user
 

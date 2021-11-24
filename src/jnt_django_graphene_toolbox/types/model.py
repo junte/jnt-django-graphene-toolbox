@@ -2,7 +2,6 @@ from typing import Optional
 
 import graphene
 from django.db.models import Model, QuerySet
-from graphene import Connection
 from graphene.types.objecttype import ObjectTypeOptions
 from graphene_django.utils import is_valid_django_model
 from graphql import ResolveInfo
@@ -70,10 +69,15 @@ class BaseModelObjectType(graphene.ObjectType):
                 node=cls,
             )
 
-        if connection is not None and not issubclass(connection, Connection):
+        is_not_connection = connection is not None and not issubclass(
+            connection,
+            graphene.Connection,
+        )
+
+        if is_not_connection:
             raise ValueError(
                 "The connection must be a Connection. Received {0}".format(
-                    connection.__name__,
+                    connection.__name__,  # type: ignore
                 ),
             )
 

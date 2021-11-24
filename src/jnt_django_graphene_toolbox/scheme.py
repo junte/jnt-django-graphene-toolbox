@@ -1,5 +1,4 @@
 import graphene
-from graphene import List, NonNull
 from graphene.types import enum, typemap
 from graphene.types.definitions import GrapheneGraphQLType
 from graphql.type.introspection import IntrospectionSchema
@@ -15,7 +14,7 @@ class TypeMap(typemap.TypeMap):
         It is a hack for fix "Found different types with the same name... " in
         enums.
         """
-        if isinstance(type, (List, NonNull)):
+        if isinstance(type, (graphene.List, graphene.NonNull)):
             return super().graphene_reducer(map, type)
 
         if type._meta.name in map and self._is_enum(map, type):  # noqa: WPS437
