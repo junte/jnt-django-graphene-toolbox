@@ -7,7 +7,10 @@ from graphene_django.utils import is_valid_django_model
 from graphql import ResolveInfo
 
 from jnt_django_graphene_toolbox.connections.model import ModelConnection
-from jnt_django_graphene_toolbox.errors import GraphQLPermissionDenied
+from jnt_django_graphene_toolbox.errors import (
+    GraphQLNotFound,
+    GraphQLPermissionDenied,
+)
 from jnt_django_graphene_toolbox.nodes.model import ModelRelayNode
 
 
@@ -132,7 +135,7 @@ class BaseModelObjectType(graphene.ObjectType):
         try:
             return queryset.get(pk=id)
         except cls._meta.model.DoesNotExist:
-            return None
+            return GraphQLNotFound()
 
     def resolve_id(self, info: ResolveInfo):  # noqa: WPS110
         """Returns object primary key."""
