@@ -2,22 +2,21 @@
 name = "jnt-django-graphene-toolbox"
 version = "0.4.0"
 description = ""
-authors = ["Junte <tech@junte.ru>"]
-classifiers=[
-        'Environment :: Web Environment',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
-        'Framework :: Django :: 3.2',
-        'Topic :: Software Development :: Libraries :: Python Modules'
+authors = ["junte <tech@junte.ru>"]
+classifiers = [
+  'Environment :: Web Environment',
+  'Intended Audience :: Developers',
+  'License :: OSI Approved :: MIT License',
+  'Operating System :: OS Independent',
+  'Topic :: Software Development :: Libraries :: Python Modules'
 ]
 
 packages = [
-    { include = "jnt_django_graphene_toolbox", from ="src" }
+  { include = "jnt_django_graphene_toolbox", from = "src" }
 ]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 jnt_django_toolbox = "*"
 graphene_django = "*"
 djangorestframework = "*"
