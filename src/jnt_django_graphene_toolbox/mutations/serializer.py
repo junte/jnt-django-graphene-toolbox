@@ -5,7 +5,7 @@ from typing import Dict, Optional
 from django.core.exceptions import ImproperlyConfigured
 from graphene.types.utils import yank_fields_from_attrs
 from graphene_django.rest_framework.mutation import fields_for_serializer
-from graphql import ResolveInfo
+from graphql import GraphQLResolveInfo
 
 from jnt_django_graphene_toolbox.errors import (
     GraphQLInputError,
@@ -106,7 +106,7 @@ class BaseSerializerMutation(BaseMutation):
     def get_serializer_kwargs(
         cls,
         root: Optional[object],
-        info: ResolveInfo,  # noqa: WPS110
+        info: GraphQLResolveInfo,  # noqa: WPS110
         **input,  # noqa: WPS125
     ) -> Dict[str, object]:
         """Get serializer options."""
@@ -119,7 +119,7 @@ class BaseSerializerMutation(BaseMutation):
     def perform_mutate(
         cls,
         root: Optional[object],
-        info: ResolveInfo,  # noqa: WPS110
+        info: GraphQLResolveInfo,  # noqa: WPS110
         validated_data,
     ) -> "BaseSerializerMutation":
         """Overrideable mutation operation."""

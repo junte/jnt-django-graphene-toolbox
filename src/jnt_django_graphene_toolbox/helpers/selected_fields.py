@@ -1,8 +1,8 @@
 from typing import Dict
 
 from graphene.utils import str_converters
-from graphql import ResolveInfo
-from graphql.utils.ast_to_dict import ast_to_dict
+from graphql import GraphQLResolveInfo
+from graphql.utilities.ast_to_dict import ast_to_dict
 
 
 def collect_fields(node, fragments: Dict[str, object]):
@@ -27,7 +27,7 @@ def collect_fields(node, fragments: Dict[str, object]):
     return field
 
 
-def get_fields_from_info(info: ResolveInfo):  # noqa: WPS110
+def get_fields_from_info(info: GraphQLResolveInfo):  # noqa: WPS110
     """Get fields from info."""
     fragments = {}
     node = ast_to_dict(info.field_asts[0])  # type:ignore
@@ -38,7 +38,10 @@ def get_fields_from_info(info: ResolveInfo):  # noqa: WPS110
     return collect_fields(node, fragments)
 
 
-def is_field_selected(info: ResolveInfo, path: str) -> bool:  # noqa: WPS110
+def is_field_selected(
+    info: GraphQLResolveInfo,  # noqa: WPS110
+    path: str,
+) -> bool:
     """Is field selected."""
     fields = get_fields_from_info(info)
 

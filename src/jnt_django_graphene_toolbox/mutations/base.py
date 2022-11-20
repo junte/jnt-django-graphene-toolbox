@@ -3,7 +3,7 @@ from typing import Optional
 
 import graphene
 from graphene.types import mutation
-from graphql import ResolveInfo
+from graphql import GraphQLResolveInfo
 
 from jnt_django_graphene_toolbox.errors import (
     BaseGraphQLError,
@@ -56,7 +56,7 @@ class BaseMutation(graphene.Mutation):
     def check_premissions(
         cls,
         root: Optional[object],
-        info: ResolveInfo,  # noqa: WPS110
+        info: GraphQLResolveInfo,  # noqa: WPS110
         **kwargs,  # noqa: WPS125
     ) -> bool:
         """Check permissions."""
@@ -70,7 +70,7 @@ class BaseMutation(graphene.Mutation):
     def handle_error(
         cls,
         root: Optional[object],
-        info: ResolveInfo,  # noqa: WPS110,
+        info: GraphQLResolveInfo,  # noqa: WPS110,
         error: Exception,
     ):
         """Handle error."""
@@ -82,7 +82,7 @@ class BaseMutation(graphene.Mutation):
     def mutate_and_get_payload(
         cls,
         root: Optional[object],
-        info: ResolveInfo,  # noqa: WPS110,
+        info: GraphQLResolveInfo,  # noqa: WPS110,
         **kwargs,
     ) -> None:  # noqa: WPS110
         """Method should be implemented in subclasses."""

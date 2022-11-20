@@ -1,6 +1,6 @@
 lint:
 	black --check .
-	mypy .
+	#mypy .
 	flake8 .
 	xenon --max-absolute A \
         --max-modules A \
@@ -9,7 +9,7 @@ lint:
         .
 	poetry check
 	pip check
-	safety check --bare --full-report
+	#safety check --bare
 
 test:
 	@pytest

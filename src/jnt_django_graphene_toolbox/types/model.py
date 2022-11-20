@@ -4,7 +4,7 @@ import graphene
 from django.db.models import Model, QuerySet
 from graphene.types.objecttype import ObjectTypeOptions
 from graphene_django.utils import is_valid_django_model
-from graphql import ResolveInfo
+from graphql import GraphQLResolveInfo
 
 from jnt_django_graphene_toolbox.connections.model import ModelConnection
 from jnt_django_graphene_toolbox.errors import (
@@ -99,7 +99,7 @@ class BaseModelObjectType(graphene.ObjectType):
         )
 
     @classmethod
-    def is_type_of(cls, root, info: ResolveInfo):  # noqa: WPS110
+    def is_type_of(cls, root, info: GraphQLResolveInfo):  # noqa: WPS110
         """Check is type of."""
         if isinstance(root, cls):
             return True
@@ -119,13 +119,13 @@ class BaseModelObjectType(graphene.ObjectType):
     def get_queryset(
         cls,
         queryset: QuerySet,
-        info: ResolveInfo,  # noqa: WPS110
+        info: GraphQLResolveInfo,  # noqa: WPS110
     ) -> QuerySet:
         """Provide queryset."""
         return queryset
 
     @classmethod
-    def get_node(cls, info: ResolveInfo, id):  # noqa: WPS110 WPS125
+    def get_node(cls, info: GraphQLResolveInfo, id):  # noqa: WPS110 WPS125
         """Get node by id."""
         user = info.context.user  # type: ignore
         if cls._meta.auth_required and not user.is_authenticated:
@@ -137,6 +137,6 @@ class BaseModelObjectType(graphene.ObjectType):
         except cls._meta.model.DoesNotExist:
             return GraphQLNotFound()
 
-    def resolve_id(self, info: ResolveInfo):  # noqa: WPS110
+    def resolve_id(self, info: GraphQLResolveInfo):  # noqa: WPS110
         """Returns object primary key."""
         return self.pk

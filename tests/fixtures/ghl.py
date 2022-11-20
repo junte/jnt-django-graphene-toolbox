@@ -1,8 +1,8 @@
 import pytest
-from graphql import ResolveInfo
+from graphql import GraphQLResolveInfo
 
 
-def _get_mock_info(request) -> ResolveInfo:
+def _get_mock_info(request) -> GraphQLResolveInfo:
     from graphene_django.rest_framework.tests import (  # noqa: WPS433
         test_mutation,
     )
@@ -15,7 +15,7 @@ def _get_mock_info(request) -> ResolveInfo:
 
 
 @pytest.fixture()
-def ghl_mock_info(rf) -> ResolveInfo:
+def ghl_mock_info(rf) -> GraphQLResolveInfo:
     """Provides graphql mocked info."""
     request = rf.get("/graphql/")
 
@@ -23,7 +23,7 @@ def ghl_mock_info(rf) -> ResolveInfo:
 
 
 @pytest.fixture()
-def ghl_auth_mock_info(user, auth_rf) -> ResolveInfo:
+def ghl_auth_mock_info(user, auth_rf) -> GraphQLResolveInfo:
     """Provides graphql mocked info with auth user."""
     request = auth_rf.get("/graphql/")
 
