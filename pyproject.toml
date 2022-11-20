@@ -50,6 +50,7 @@ exclude = '''
   /(
     | \.git          # root of the project
     | \.mypy_cache
+    | \.venv
     | \.pytest_cache
     | .*\/migrations
   )/
