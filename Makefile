@@ -17,6 +17,12 @@ test:
 make-messages:
 	@django-admin makemessages -l en -l ru --no-location
 
+# -- pre-commit --
+
 pre-commit-install:
 	@pre-commit install
 	@pre-commit install --hook-type commit-msg
+
+pre-commit:
+	@pre-commit
+
