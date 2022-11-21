@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jnt-django-graphene-toolbox"
-version = "0.5.0"
+version = "0.5.1"
 description = ""
 authors = ["junte <tech@junte.ru>"]
 classifiers = [
@@ -17,6 +17,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
+django = ">=4.1"
 jnt_django_toolbox = "*"
 graphene_django = "*"
 djangorestframework = "*"

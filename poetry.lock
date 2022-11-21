@@ -1228,7 +1228,7 @@ requests = ">=2.0,<3.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "0024ff989c4de7be8cf4d1461f08da00ba1e23c0856a1cda32057b40b3ead75b"
+content-hash = "7b1c7a037aa806f074c0c0d461cba7219bdd5d31ed7f8035d9420eb40388924a"
 
 [metadata.files]
 aniso8601 = [
